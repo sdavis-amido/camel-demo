@@ -27,7 +27,7 @@ endpoint names in application.yml
 ## Starting the app
 
 ```bash
-mcn clean spring-boot:run
+mvn clean spring-boot:run
 ```
 
 ## Pushing Messages onto the queue
