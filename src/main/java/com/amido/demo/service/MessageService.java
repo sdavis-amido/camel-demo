@@ -21,13 +21,13 @@ public class MessageService {
     try (ProducerTemplate producerTemplate = camelContext.createProducerTemplate()) {
 
       // SEND DIRECT TO THE ENDPOINT (QUEUE)
-      // producerTemplate.sendBody("{{my-app.my-endpoint}}", message);
+      producerTemplate.sendBody("{{my-app.my-endpoint}}", message);
 
       // INTERCEPTED BY A LOGGER BEFORE BEING SENT TO THE QUEUE
       // producerTemplate.sendBody("direct:logging-route", message);
 
       // SENT TO MULTIPLE ENDPOINTS (QUEUES)
-      producerTemplate.sendBody("direct:multicast-route", message);
+      // producerTemplate.sendBody("direct:multicast-route", message);
 
       ret = "ACK";
 
