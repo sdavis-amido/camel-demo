@@ -24,10 +24,10 @@ public class MessageService {
       // producerTemplate.sendBody("{{my-app.my-endpoint}}", message);
 
       // INTERCEPTED BY A LOGGER BEFORE BEING SENT TO THE QUEUE
-      producerTemplate.sendBody("direct:logging-route", message);
+      // producerTemplate.sendBody("direct:logging-route", message);
 
       // SENT TO MULTIPLE ENDPOINTS (QUEUES)
-      // producerTemplate.sendBody("direct:multicast-route", message);
+      producerTemplate.sendBody("direct:multicast-route", message);
 
       ret = "ACK";
 

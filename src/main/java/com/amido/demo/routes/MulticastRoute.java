@@ -13,6 +13,6 @@ public class MulticastRoute extends RouteBuilder {
     from("direct:multicast-route")
         .multicast()
         .to("{{my-app.my-to-endpoint}}")
-        .to("file:/Users/stevedavis/Downloads/camel-multicast");
+        .to("file:{{my-app.test-root-folder}}/camel-multicast");
   }
 }

@@ -20,6 +20,7 @@ my-app:
   kafka-topic-name: camel-demo-topic
   sqs-arn: arn:aws:sqs:eu-west-2:316154162729:stacks-dev
   sns-arn: arn:aws:sns:eu-west-2:316154162729:stacks-dev
+  test-root-folder: /Users/stevedavis/Downloads
 
   #### Scenario 1 : SQS Queue
   my-to-endpoint: aws2-sqs:${my-app.sqs-arn}
