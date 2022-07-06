@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+cloud:
+  aws:
+    region:
+      static: eu-west-2
+    stack:
+      auto: false
+    credentials:
+      accessKey: access
+      secretKey: secret
+
+my-app:
+  test-root-folder: /tmp/nowhere
