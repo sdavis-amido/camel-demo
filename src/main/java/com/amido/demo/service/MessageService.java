@@ -18,7 +18,7 @@ public class MessageService {
 
     String ret;
 
-    log.debug("WRITING TO MESSAGING ENDPOINT : {}", message);
+    log.debug("----> WRITING TO MESSAGING ENDPOINT : {}", message);
 
     try (ProducerTemplate producerTemplate = camelContext.createProducerTemplate()) {
 
@@ -44,6 +44,6 @@ public class MessageService {
 
   @Consume("{{my-app.my-from-endpoint}}")
   public void receive(@Body String payload) {
-    log.debug("RECEIVED FROM MESSAGING ENDPOINT : {}", payload);
+    log.debug("<---- RECEIVED FROM MESSAGING ENDPOINT : {}", payload);
   }
 }

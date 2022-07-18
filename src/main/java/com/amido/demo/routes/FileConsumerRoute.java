@@ -10,6 +10,7 @@ public class FileConsumerRoute extends RouteBuilder {
 
   @Override
   public void configure() throws Exception {
-    from("file:{{my-app.test-root-folder}}/camel-multicast-send").to("{{my-app.my-to-endpoint}}");
+    from("file:{{my-app.test-root-folder}}/camel-multicast-send-to-endpoint")
+        .to("{{my-app.my-to-endpoint}}");
   }
 }
