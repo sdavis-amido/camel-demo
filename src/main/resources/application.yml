@@ -20,7 +20,7 @@ camel:
       connection-string: ${SB_CONNECTION_STRING}
       subscription-name: ${SB_SUBSCRIPTION}
       enabled: ${SB_ENABLED}
-      # service-bus-receive-mode: PEEK_LOCK
+      service-bus-receive-mode: PEEK_LOCK
 
 my-app:
   kafka-topic-name: camel-demo-topic
