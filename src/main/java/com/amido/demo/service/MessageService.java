@@ -18,10 +18,12 @@ public class MessageService {
 
     String ret;
 
+    log.debug("WRITING TO MESSAGING ENDPOINT : {}", message);
+
     try (ProducerTemplate producerTemplate = camelContext.createProducerTemplate()) {
 
       // SEND DIRECT TO THE ENDPOINT (QUEUE)
-      producerTemplate.sendBody("{{my-app.my-endpoint}}", message);
+      producerTemplate.sendBody("{{my-app.my-to-endpoint}}", message);
 
       // INTERCEPTED BY A LOGGER BEFORE BEING SENT TO THE QUEUE
       // producerTemplate.sendBody("direct:logging-route", message);
@@ -42,6 +44,6 @@ public class MessageService {
 
   @Consume("{{my-app.my-from-endpoint}}")
   public void receive(@Body String payload) {
-    log.debug("RECEIVED FROM QUEUE : {}", payload);
+    log.debug("RECEIVED FROM MESSAGING ENDPOINT : {}", payload);
   }
 }

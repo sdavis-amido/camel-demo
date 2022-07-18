@@ -16,6 +16,12 @@ camel:
     kafka:
       brokers: localhost:9092
 
+    azure-servicebus:
+      connection-string: ${SB_CONNECTION_STRING}
+      subscription-name: ${SB_SUBSCRIPTION}
+      enabled: ${SB_ENABLED}
+      # service-bus-receive-mode: PEEK_LOCK
+
 my-app:
   kafka-topic-name: camel-demo-topic
   sqs-arn: arn:aws:sqs:eu-west-2:316154162729:stacks-dev
@@ -33,3 +39,7 @@ my-app:
   #### Scenario 3 : Kafka Topic
   #my-to-endpoint: kafka:${my-app.kafka-topic-name}
   #my-from-endpoint: kafka:${my-app.kafka-topic-name}
+
+  #### Scenario 4 : Azure ServiceBus
+  #my-to-endpoint: azure-servicebus:${SB_TOPIC}?serviceBusType=topic
+  #my-from-endpoint: azure-servicebus:${SB_TOPIC}?serviceBusType=topic
