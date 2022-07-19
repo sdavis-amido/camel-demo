@@ -81,15 +81,7 @@
   <dependencyManagement>
 
     <dependencies>
-      <!-- Camel BOM -->
-      <dependency>
-        <groupId>org.apache.camel.springboot</groupId>
-        <artifactId>camel-spring-boot-bom</artifactId>
-        <version>${camel.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <!-- ... other BOMs or dependencies ... -->
+
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
