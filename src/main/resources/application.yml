@@ -1,45 +1,15 @@
 server:
   port: 8080
 
-cloud:
-  aws:
-    region:
-      static: eu-west-2
-    stack:
-      auto: false
-    credentials:
-      accessKey: ${AWS_KEY:}
-      secretKey: ${AWS_SECRET:}
-
 camel:
   component:
     kafka:
       brokers: localhost:9092
 
-    azure-servicebus:
-      connection-string: ${SB_CONNECTION_STRING}
-      subscription-name: ${SB_SUBSCRIPTION}
-      enabled: ${SB_ENABLED}
-      service-bus-receive-mode: PEEK_LOCK
-
 my-app:
   kafka-topic-name: camel-demo-topic
-  sqs-arn: arn:aws:sqs:eu-west-2:316154162729:stacks-dev
-  sns-arn: arn:aws:sns:eu-west-2:316154162729:stacks-dev
   test-root-folder: /Users/stevedavis/Downloads
 
-  #### Scenario 1 : SQS Queue
-  my-to-endpoint: aws2-sqs:${my-app.sqs-arn}
-  my-from-endpoint: aws2-sqs:${my-app.sqs-arn}
-
-  #### Scenario 2 : SNS Topic to SQS Queue
-  #my-to-endpoint: aws2-sns:${my-app.sns-arn}
-  #my-from-endpoint: aws2-sqs:${my-app.sqs-arn} # SNS topic is wired to push to SQS queue in AWS
-
   #### Scenario 3 : Kafka Topic
-  #my-to-endpoint: kafka:${my-app.kafka-topic-name}
-  #my-from-endpoint: kafka:${my-app.kafka-topic-name}
-
-  #### Scenario 4 : Azure ServiceBus
-  #my-to-endpoint: azure-servicebus:${SB_TOPIC}?serviceBusType=topic
-  #my-from-endpoint: azure-servicebus:${SB_TOPIC}?serviceBusType=topic
+  my-to-endpoint: kafka:${my-app.kafka-topic-name}
+  my-from-endpoint: kafka:${my-app.kafka-topic-name}

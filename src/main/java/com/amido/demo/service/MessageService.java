@@ -31,7 +31,7 @@ public class MessageService {
       // SENT TO MULTIPLE ENDPOINTS (QUEUES)
       // producerTemplate.sendBody("direct:multicast-route", message);
 
-      ret = "ACK";
+      ret = "ACK " + getMemory();
 
     } catch (Exception e) {
 
@@ -45,5 +45,18 @@ public class MessageService {
   @Consume("{{my-app.my-from-endpoint}}")
   public void receive(@Body String payload) {
     log.debug("<---- RECEIVED FROM MESSAGING ENDPOINT : {}", payload);
+  }
+
+  private String getMemory() {
+
+    System.gc();
+    System.gc();
+
+    Runtime rt = Runtime.getRuntime();
+    long totalMem = rt.totalMemory();
+    long freeMem = rt.freeMemory();
+    long usedMem = totalMem - freeMem;
+
+    return "" + (usedMem / 1048576) + " MB";
   }
 }

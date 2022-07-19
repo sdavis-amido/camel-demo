@@ -57,42 +57,7 @@
 
     <dependency>
       <groupId>org.apache.camel.springboot</groupId>
-      <artifactId>camel-azure-servicebus-starter</artifactId>
-      <version>${camel.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.camel.springboot</groupId>
       <artifactId>camel-jackson-starter</artifactId>
-      <version>${camel.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.camel.springboot</groupId>
-      <artifactId>camel-timer-starter</artifactId>
-      <version>${camel.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.camel.springboot</groupId>
-      <artifactId>camel-rest-starter</artifactId>
-      <version>${camel.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.camel.springboot</groupId>
-      <artifactId>camel-servlet-starter</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-aws2-sqs</artifactId>
-      <version>${camel.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-aws2-sns</artifactId>
       <version>${camel.version}</version>
     </dependency>
 
