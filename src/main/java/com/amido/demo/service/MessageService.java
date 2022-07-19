@@ -1,50 +1,64 @@
 package com.amido.demo.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.camel.Body;
-import org.apache.camel.CamelContext;
-import org.apache.camel.Consume;
-import org.apache.camel.ProducerTemplate;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
 
 @Slf4j
 @Service
 public class MessageService {
 
-  @Autowired private CamelContext camelContext;
+  @Autowired private KafkaTemplate<String, Object> kafkaTemplate;
+
+  @Value(value = "${kafka.topicName:camel-demo-topic}")
+  private String topicName;
+
+  @Value(value = "${kafka.groupId:the-group-id}")
+  private String groupId;
 
   public String send(String message) {
 
-    String ret;
+    log.debug("Using topic name : {}", topicName);
 
-    log.debug("----> WRITING TO MESSAGING ENDPOINT : {}", message);
+    ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(topicName, message);
 
-    try (ProducerTemplate producerTemplate = camelContext.createProducerTemplate()) {
+    future.addCallback(
+        new ListenableFutureCallback<>() {
 
-      // SEND DIRECT TO THE ENDPOINT (QUEUE)
-      producerTemplate.sendBody("{{my-app.my-to-endpoint}}", message);
+          @Override
+          public void onSuccess(SendResult<String, Object> result) {
+            log.debug(
+                "Sent message=["
+                    + message
+                    + "] with offset=["
+                    + result.getRecordMetadata().offset()
+                    + "]");
+          }
 
-      // INTERCEPTED BY A LOGGER BEFORE BEING SENT TO THE QUEUE
-      // producerTemplate.sendBody("direct:logging-route", message);
+          @Override
+          public void onFailure(Throwable ex) {
+            log.debug("Unable to send message=[" + message + "] due to : " + ex.getMessage());
+          }
+        });
 
-      // SENT TO MULTIPLE ENDPOINTS (QUEUES)
-      // producerTemplate.sendBody("direct:multicast-route", message);
-
-      ret = "ACK " + getMemory();
-
-    } catch (Exception e) {
-
-      log.error(e.getMessage());
-      ret = "NACK";
-    }
-
-    return ret;
+    return "ACK " + getMemory();
   }
 
-  @Consume("{{my-app.my-from-endpoint}}")
-  public void receive(@Body String payload) {
-    log.debug("<---- RECEIVED FROM MESSAGING ENDPOINT : {}", payload);
+  @KafkaListener(
+      topics = "#{'${kafka.topicName:camel-demo-topic}'.split(',')}",
+      groupId = "#{'${kafka.groupId:the-group-id}'}")
+  public void listen(Object message) {
+
+    ConsumerRecord<String, Object> consumerRecord = (ConsumerRecord<String, Object>) message;
+
+    log.debug("Received Message in group {} : {}", groupId, consumerRecord.value());
   }
 
   private String getMemory() {

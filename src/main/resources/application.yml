@@ -1,15 +1,6 @@
 server:
   port: 8080
 
-camel:
-  component:
-    kafka:
-      brokers: localhost:9092
-
-my-app:
-  kafka-topic-name: camel-demo-topic
-  test-root-folder: /Users/stevedavis/Downloads
-
-  #### Scenario 3 : Kafka Topic
-  my-to-endpoint: kafka:${my-app.kafka-topic-name}
-  my-from-endpoint: kafka:${my-app.kafka-topic-name}
+kafka:
+  bootstrapAddress: localhost:9092
+  groupId: steves-group
